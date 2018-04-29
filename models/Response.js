@@ -3,7 +3,7 @@ const { Schema } = mongoose;
 
 const responseSchema = new Schema({
 	responseDate: Date,
-	response1: Number
+	responseValues: Object
 });
 
 module.exports = responseSchema;

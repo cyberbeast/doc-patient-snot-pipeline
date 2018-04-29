@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const keys = require('./config/keys');
 
 require('./models/User');
-require('./models/Survey');
+require('./models/Enrollment');
 require('./services/passport');
 
 mongoose.connect(keys.mlab.dbURI);
@@ -26,6 +26,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 require('./routes/authRoutes')(app);
+require('./routes/enrollmentRoutes')(app);
 
 if (process.env.NODE_ENV === 'production') {
 	// Serve production assets

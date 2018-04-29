@@ -2,6 +2,7 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const mongoose = require('mongoose');
 const keys = require('../config/keys');
+const SentenceCase = require('../utils/sentenceCase');
 
 const User = mongoose.model('users');
 
@@ -16,9 +17,9 @@ passport.deserializeUser((id, done) => {
 passport.use(
 	new GoogleStrategy(
 		{
-			clientId: keys.google.clientID,
+			clientID: keys.google.clientID,
 			clientSecret: keys.google.clientSecret,
-			callbackURL: '/auth/gooogle/callback',
+			callbackURL: '/auth/google/callback',
 			proxy: true
 		},
 		async (accessToken, refreshToken, profile, done) => {
@@ -32,7 +33,11 @@ passport.use(
 			}
 
 			const user = await new User({
-				googleId: profile.id
+				googleId: profile.id,
+				profileImage: profile._json.image.url,
+				email: profile._json.emails[0].value,
+				firstName: SentenceCase(profile._json.name.givenName),
+				lastName: SentenceCase(profile._json.name.familyName)
 			}).save();
 
 			done(null, user);

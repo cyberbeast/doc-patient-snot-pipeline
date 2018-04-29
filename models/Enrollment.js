@@ -2,12 +2,11 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const RecipientSchema = require('./Recipient');
 
-const surveySchema = new Schema({
+const enrollmentSchema = new Schema({
 	title: String,
 	recipient: RecipientSchema,
 	_doctor: { type: Schema.Types.ObjectId, ref: 'User' },
-	dateSent: Date,
-	lastResponded: Date
+	dateCreated: Date
 });
 
-mongoose.model('surveys', surveySchema);
+mongoose.model('enrollments', enrollmentSchema);
