@@ -5,6 +5,8 @@ const keys = require('../config/keys');
 const SentenceCase = require('../utils/sentenceCase');
 
 const User = mongoose.model('users');
+const Doctor = mongoose.model('Doctor');
+const Patient = mongoose.model('Patient');
 
 passport.serializeUser((user, done) => {
 	done(null, user.id);
@@ -32,12 +34,13 @@ passport.use(
 				return done(null, existingUser);
 			}
 
-			const user = await new User({
+			const user = await new Patient({
 				googleId: profile.id,
 				profileImage: profile._json.image.url,
 				email: profile._json.emails[0].value,
 				firstName: SentenceCase(profile._json.name.givenName),
-				lastName: SentenceCase(profile._json.name.familyName)
+				lastName: SentenceCase(profile._json.name.familyName),
+				lastResponseDate: new Date()
 			}).save();
 
 			done(null, user);

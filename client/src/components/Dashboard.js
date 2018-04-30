@@ -45,12 +45,7 @@ class Dashboard extends Component {
 	}
 
 	render() {
-		return (
-			<div>
-				{this.renderContentOnAppMode()}
-				{/* <SurveyList /> */}
-			</div>
-		);
+		return <div>{this.renderContentOnAppMode()}</div>;
 	}
 }
 

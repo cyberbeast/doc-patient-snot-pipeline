@@ -19,7 +19,7 @@ class Header extends Component {
 						<div className="chip">
 							<img src={this.props.auth.profileImage} alt="user" />
 							{this.props.auth.firstName} {this.props.auth.lastName},{' '}
-							<em>{this.props.auth.userType.category}</em>
+							<em>{this.props.auth.userType}</em>
 						</div>
 					</li>,
 					<li key="Logout">

@@ -22,11 +22,9 @@ class EnrollmentList extends Component {
 				return (
 					<span className="card-title"> {enrollment.recipient.email}</span>
 				);
-				break;
 
 			case 'Patient':
 				return <span className="card-title"> {enrollment.title}</span>;
-				break;
 
 			default:
 				this.renderErrorPanel('Invalid Mode!');
@@ -43,7 +41,6 @@ class EnrollmentList extends Component {
 						{new Date(enrollment.dateCreated).toLocaleDateString()}
 					</p>
 				);
-				break;
 
 			case 'Patient':
 				return (
@@ -51,7 +48,6 @@ class EnrollmentList extends Component {
 						Enrolled : {new Date(enrollment.dateCreated).toLocaleDateString()}
 					</p>
 				);
-				break;
 
 			default:
 				this.renderErrorPanel('Invalid Mode!');
@@ -63,11 +59,9 @@ class EnrollmentList extends Component {
 		switch (this.props.mode) {
 			case 'Doctor':
 				return <Link to="/"> View </Link>;
-				break;
 
 			case 'Patient':
-				return <Link to="/"> Respond </Link>;
-				break;
+				return <Link to="/response/new"> Respond </Link>;
 
 			default:
 				this.renderErrorPanel();
