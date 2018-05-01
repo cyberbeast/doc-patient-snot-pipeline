@@ -4,42 +4,98 @@ import { connect } from 'react-redux';
 import formFields from './formFields';
 import { withRouter } from 'react-router-dom';
 import * as actions from '../../actions';
+import PropTypes from 'prop-types';
+import { withStyles } from 'material-ui/styles';
+import Card, { CardActions, CardContent } from 'material-ui/Card';
+import Button from 'material-ui/Button';
+import Typography from 'material-ui/Typography';
+import Icon from 'material-ui/Icon';
+
+const styles = theme => ({
+	container: {
+		display: 'flex',
+		flexWrap: 'wrap'
+	},
+	formControl: {
+		margin: theme.spacing.unit
+	},
+	card: {
+		minWidth: 275
+	},
+	title: {
+		marginBottom: 16,
+		fontSize: 14
+	},
+	pos: {
+		marginBottom: 12
+	},
+	leftIcon: {
+		marginRight: theme.spacing.unit
+	},
+	rightIcon: {
+		marginLeft: theme.spacing.unit
+	}
+});
 
 const EnrollmentFormReview = ({
 	onCancel,
 	formValues,
 	submitEnrollment,
-	history
+	history,
+	classes
 }) => {
 	const reviewFields = _.map(formFields, ({ name, label }) => {
 		return (
 			<div key={name}>
-				<label>{label}</label>
-				<div>{formValues[name]}</div>
+				<Typography variant="subheading" gutterBottom>
+					{label}
+				</Typography>
+				<Typography variant="title" gutterBottom>
+					{formValues[name]}
+				</Typography>
 			</div>
 		);
 	});
 
 	return (
-		<div>
-			<h5>Please confirm your entries.</h5>
-			{reviewFields}
-			<button
-				className="yellow darken-3 white-text btn-flat"
-				onClick={onCancel}
-			>
-				<i className="material-icons left">navigate_before</i>
-				Back
-			</button>
-			<button
-				className="teal btn-flat white-text right"
-				onClick={() => submitEnrollment(formValues, history)}
-			>
-				Enroll
-				<i className="material-icons right">done_all</i>
-			</button>
-		</div>
+		<Card className={classes.card}>
+			<CardContent>
+				<Typography className={classes.title} color="textSecondary">
+					Patient Enrollment
+				</Typography>
+				<Typography variant="headline" component="h2">
+					Review
+				</Typography>
+				<Typography className={classes.pos} color="textSecondary">
+					Please confirm your entries.
+				</Typography>
+				<br />
+				<br />
+				<br />
+
+				{reviewFields}
+			</CardContent>
+			<CardActions style={{ display: 'flow-root' }}>
+				<Button onClick={onCancel} color="secondary" size="small">
+					{' '}
+					<Icon className={classes.leftIcon}>navigate_before</Icon>Back
+				</Button>
+				<Button
+					type="submit"
+					color="primary"
+					size="small"
+					onClick={() => submitEnrollment(formValues, history)}
+				>
+					Enroll
+					<Icon className={classes.rightIcon}>done</Icon>
+				</Button>
+			</CardActions>
+		</Card>
 	);
+};
+
+EnrollmentFormReview.propTypes = {
+	classes: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {
@@ -49,5 +105,5 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, actions)(
-	withRouter(EnrollmentFormReview)
+	withRouter(withStyles(styles)(EnrollmentFormReview))
 );

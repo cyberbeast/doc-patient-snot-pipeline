@@ -1,18 +1,44 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-const userSchema = new Schema({
-	googleId: String,
-	userType: {
-		type: Object,
-		default: {
-			category: 'Patient'
-		}
-	},
-	email: String,
-	profileImage: String,
-	firstName: String,
-	lastName: String
-});
+const options = { discriminatorKey: 'userType' };
 
-mongoose.model('users', userSchema);
+const userSchema = new Schema(
+	{
+		googleId: String,
+		email: String,
+		profileImage: String,
+		firstName: String,
+		lastName: String
+	},
+	options
+);
+
+const User = mongoose.model('users', userSchema);
+
+const DoctorUser = User.discriminator(
+	'Doctor',
+	new Schema(
+		{
+			enrolledPatientsCount: {
+				type: Number,
+				default: 0
+			}
+		},
+		options
+	)
+);
+
+const Doctor = mongoose.model('Doctor');
+
+const PatientUser = User.discriminator(
+	'Patient',
+	new Schema(
+		{
+			lastResponseDate: Date
+		},
+		options
+	)
+);
+
+const Patient = mongoose.model('Patient');

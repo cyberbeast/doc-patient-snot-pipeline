@@ -12,15 +12,23 @@ const Enrollment = mongoose.model('enrollments');
 module.exports = app => {
 	app.get('/api/enrollments', requireLogin, async (req, res) => {
 		console.log('Handling Enrollment API request');
-		if (req.user.userType.category === 'Doctor') {
+		if (req.user.userType === 'Doctor') {
 			const enrollments = await Enrollment.find({
 				_doctor: req.user.id
-			}).select('-_doctor -recipient.responses');
+			})
+				.populate('_doctor')
+				.select(
+					'-_doctor.googleId -_doctor.email -_doctor.profileImage -recipient.responses'
+				);
 			res.send(enrollments);
-		} else if (req.user.userType.category === 'Patient') {
+		} else if (req.user.userType === 'Patient') {
 			const enrollments = await Enrollment.find({
 				'recipient.email': req.user.email
-			}).select('-_doctor -recipient.responses');
+			})
+				.populate('_doctor')
+				.select(
+					'-_doctor.googleId -_doctor.email -_doctor.profileImage -recipient.responses'
+				);
 			res.send(enrollments);
 		} else {
 			return res
@@ -50,11 +58,12 @@ module.exports = app => {
 				await mailer.send();
 				await enrollment.save();
 
-				if (req.user.userType.patientsEnrolledCount === undefined) {
-					req.user.userType.patientsEnrolledCount = 0;
+				if (req.user.enrolledPatientsCount === undefined) {
+					req.user.enrolledPatientsCount = 0;
 				}
-				req.user.userType.patientsEnrolledCount += 1;
+				req.user.enrolledPatientsCount += 1;
 				const user = await req.user.save();
+				console.log('Here is user: ', user);
 
 				res.send(user);
 			} catch (err) {

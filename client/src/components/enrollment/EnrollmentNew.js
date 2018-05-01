@@ -11,7 +11,7 @@ class EnrollmentNew extends Component {
 		if (this.state.showEnrollmentFormReview) {
 			return (
 				<EnrollmentFormReview
-					onCancel={() => this.state({ showEnrollmentFormReview: false })}
+					onCancel={() => this.setState({ showEnrollmentFormReview: false })}
 				/>
 			);
 		}
@@ -28,7 +28,11 @@ class EnrollmentNew extends Component {
 	}
 
 	render() {
-		return <div>{this.renderContent()}</div>;
+		return (
+			<div style={{ margin: '2%', textAlign: 'center' }}>
+				{this.renderContent()}
+			</div>
+		);
 	}
 }
 
