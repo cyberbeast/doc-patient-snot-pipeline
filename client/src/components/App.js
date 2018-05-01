@@ -3,9 +3,14 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 
-import { Header, Dashboard, EnrollmentNew, ResponseNew, View } from './';
-
-const Landing = () => <h2>Landing</h2>;
+import {
+	Header,
+	Dashboard,
+	EnrollmentNew,
+	ResponseNew,
+	View,
+	Landing
+} from './';
 
 class App extends Component {
 	componentDidMount() {

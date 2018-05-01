@@ -6,6 +6,7 @@ import EnrollmentFormReview from './enrollment/EnrollmentFormReview';
 import ResponseNew from './respond/ResponseNew';
 import RespondForm from './respond/ResponseForm';
 import View from './View';
+import Landing from './Landing';
 
 export {
 	Header,
@@ -15,5 +16,6 @@ export {
 	EnrollmentFormReview,
 	ResponseNew,
 	RespondForm,
-	View
+	View,
+	Landing
 };
