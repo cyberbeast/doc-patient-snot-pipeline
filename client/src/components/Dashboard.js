@@ -2,6 +2,24 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import EnrollmentList from './enrollment/EnrollmentList';
+import PropTypes from 'prop-types';
+import { withStyles } from 'material-ui/styles';
+import Button from 'material-ui/Button';
+import AddIcon from '@material-ui/icons/Add';
+
+const styles = theme => ({
+	root: {
+		backgroundColor: theme.palette.background.paper,
+		width: 'auto',
+		position: 'relative',
+		minHeight: '90vh'
+	},
+	fab: {
+		position: 'absolute',
+		bottom: theme.spacing.unit * 3,
+		right: theme.spacing.unit * 1
+	}
+});
 
 class Dashboard extends Component {
 	renderContentOnAppMode() {
@@ -16,16 +34,17 @@ class Dashboard extends Component {
 				);
 			case 'Doctor':
 				return (
-					<div>
-						<div className="fixed-action-btn">
-							<Link
-								to="/enrollments/new"
-								className="btn-floating btn-large red"
-							>
-								<i className="large material-icons">add</i>
-							</Link>
-						</div>
+					<div className={this.props.classes.root}>
 						<EnrollmentList mode="Doctor" />
+						<Button
+							variant="fab"
+							color="primary"
+							className={this.props.classes.fab}
+							component={Link}
+							to="/enrollments/new"
+						>
+							<AddIcon />
+						</Button>
 					</div>
 				);
 			case 'Patient':
@@ -49,7 +68,14 @@ class Dashboard extends Component {
 	}
 }
 
+Dashboard.propTypes = {
+	classes: PropTypes.object.isRequired,
+	theme: PropTypes.object.isRequired
+};
+
 function mapStateToProps({ mode }) {
 	return { mode };
 }
-export default connect(mapStateToProps)(Dashboard);
+export default connect(mapStateToProps)(
+	withStyles(styles, { withTheme: true })(Dashboard)
+);

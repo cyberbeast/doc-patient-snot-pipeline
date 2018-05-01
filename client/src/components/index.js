@@ -3,9 +3,9 @@ import Dashboard from './Dashboard';
 import EnrollmentNew from './enrollment/EnrollmentNew';
 import EnrollmentForm from './enrollment/EnrollmentForm';
 import EnrollmentFormReview from './enrollment/EnrollmentFormReview';
-import RespondNew from './respond/ResponseNew';
+import ResponseNew from './respond/ResponseNew';
 import RespondForm from './respond/ResponseForm';
-import RespondFormReview from './respond/ResponseFormReview';
+import View from './View';
 
 export {
 	Header,
@@ -13,7 +13,7 @@ export {
 	EnrollmentNew,
 	EnrollmentForm,
 	EnrollmentFormReview,
-	RespondNew,
+	ResponseNew,
 	RespondForm,
-	RespondFormReview
+	View
 };

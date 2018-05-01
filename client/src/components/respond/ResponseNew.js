@@ -3,23 +3,20 @@
 import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
 import ResponseForm from './ResponseForm';
-import ResponseFormReview from './ResponseFormReview';
+import { connect } from 'react-redux';
+import * as actions from '../../actions';
 
 class ResponseNew extends Component {
-	state = { showResponseFormReview: false };
-
 	renderContent() {
-		if (this.state.showResponseFormReview) {
-			return (
-				<ResponseFormReview
-					onCancel={() => this.setState({ showResponseFormReview: false })}
-				/>
-			);
-		}
-
 		return (
 			<ResponseForm
-				onResponseSubmit={() => this.setState({ showResponseFormReview: true })}
+				onResponseSubmit={values => {
+					this.props.submitResponse(
+						values,
+						this.props.history,
+						this.props.match.params.enrollmentId
+					);
+				}}
 			/>
 		);
 	}
@@ -29,6 +26,8 @@ class ResponseNew extends Component {
 	}
 }
 
-export default reduxForm({
-	form: 'responseForm'
-})(ResponseNew);
+export default connect(null, actions)(
+	reduxForm({
+		form: 'responseForm'
+	})(ResponseNew)
+);
