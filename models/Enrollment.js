@@ -5,7 +5,7 @@ const RecipientSchema = require('./Recipient');
 const enrollmentSchema = new Schema({
 	title: String,
 	recipient: RecipientSchema,
-	_doctor: { type: Schema.Types.ObjectId, ref: 'User' },
+	_doctor: { type: Schema.Types.ObjectId, ref: 'Doctor' },
 	dateCreated: Date
 });
 

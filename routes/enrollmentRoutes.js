@@ -15,12 +15,20 @@ module.exports = app => {
 		if (req.user.userType === 'Doctor') {
 			const enrollments = await Enrollment.find({
 				_doctor: req.user.id
-			}).select('-_doctor -recipient.responses');
+			})
+				.populate('_doctor')
+				.select(
+					'-_doctor.googleId -_doctor.email -_doctor.profileImage -recipient.responses'
+				);
 			res.send(enrollments);
 		} else if (req.user.userType === 'Patient') {
 			const enrollments = await Enrollment.find({
 				'recipient.email': req.user.email
-			}).select('-_doctor -recipient.responses');
+			})
+				.populate('_doctor')
+				.select(
+					'-_doctor.googleId -_doctor.email -_doctor.profileImage -recipient.responses'
+				);
 			res.send(enrollments);
 		} else {
 			return res
